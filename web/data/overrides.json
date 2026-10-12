@@ -1,0 +1,130 @@
+{
+  "bmw-3-series-automatic-7-8": {
+    "cover": 5,
+    "label": "Graphite"
+  },
+  "bmw-3-series-automatic-7-7-5": {
+    "label": "Steel blue"
+  },
+  "bmw-3-series-2009-10-8-9": {
+    "cover": 3
+  },
+  "bmw-series-1-automatic-5-5-6": {
+    "cover": 5
+  },
+  "daf-xf-euro-3-29-29": {
+    "label": "Red"
+  },
+  "daf-xf-euro-3-33-33": {
+    "label": "White"
+  },
+  "daf-xf-euro-5-automatic-30-30": {
+    "label": "White"
+  },
+  "daf-xf-euro-5-automatic-29-29": {
+    "label": "Red"
+  },
+  "daf-xf-euro-5-manual-33-33": {
+    "label": "White"
+  },
+  "daf-xf-euro-5-manual-30-30": {
+    "label": "Orange"
+  },
+  "daf-xf-euro-5-manual-31-31": {
+    "label": "Blue"
+  },
+  "daf-xf-euro-5-manual-32-32": {
+    "label": "White"
+  },
+  "honda-i-robot-automatic-7-7-5": {
+    "cover": 8
+  },
+  "honda-jazz-manual-4-5-5": {
+    "cover": 4
+  },
+  "kia-picanto-automatic-5-6": {
+    "cover": 5
+  },
+  "kia-picanto-manual-4-5-5": {
+    "cover": 3
+  },
+  "kia-picanto-morning-manual-6-7": {
+    "cover": 3
+  },
+  "kia-rio": {
+    "label": "White"
+  },
+  "kia-rio-7-8": {
+    "label": "Grey"
+  },
+  "mercedes-c180-automatic-7-8": {
+    "cover": 2,
+    "label": "Silver"
+  },
+  "mercedes-c180-automatic-8-9": {
+    "cover": 4,
+    "label": "Classic silver"
+  },
+  "mercedes-c180-manual-7-5-8-5": {
+    "cover": 4,
+    "label": "Champagne"
+  },
+  "mercedes-c180-manual-7-8-5": {
+    "cover": 3,
+    "label": "Silver"
+  },
+  "mercedes-c180-wagon-automatic-7-8": {
+    "cover": 2
+  },
+  "mercedes-c300": {
+    "cover": 2
+  },
+  "mercedes-c300-2010": {
+    "cover": 2
+  },
+  "mercedes-c300-2012": {
+    "cover": 6
+  },
+  "mercedes-e320-automatic-7-8": {
+    "cover": 2
+  },
+  "peugeot-206-automatic-5-5-5": {
+    "label": "Grey"
+  },
+  "peugeot-206-4-5-5": {
+    "label": "Silver"
+  },
+  "peugeot-307-automatic-6-6-5": {
+    "label": "Blue"
+  },
+  "peugeot-307-manual-5-5-5": {
+    "cover": 5,
+    "label": "Silver"
+  },
+  "peugeot-308-automatic-6-5-7": {
+    "label": "Black"
+  },
+  "peugeot-308-automatic-5-5-6-5": {
+    "cover": 7,
+    "label": "Grey"
+  },
+  "peugeot-308-manual-6-7": {
+    "cover": 3,
+    "label": "Silver"
+  },
+  "peugeot-406-manual-7-5-8-5": {
+    "cover": 4,
+    "label": "Dark grey"
+  },
+  "peugeot-406-6-7": {
+    "cover": 6,
+    "label": "Silver"
+  },
+  "toyota-yaris-automatic": {
+    "cover": 4,
+    "label": "Black"
+  },
+  "toyota-yaris-automatic-6-5-7-5": {
+    "label": "Grey"
+  }
+}

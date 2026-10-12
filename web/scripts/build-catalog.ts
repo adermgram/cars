@@ -10,6 +10,9 @@ const THUMB_W = 640;
 
 type Car = {
   slug: string;
+  label: string | null;
+  sold: boolean;
+  landedAt: string | null;
   brand: string;
   name: string;
   transmission: "Automatic" | "Manual" | null;
@@ -32,7 +35,7 @@ function toMillions(raw: string): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
-function parseName(folder: string, brand: string) {
+function parseName(folder: string) {
   const warnings: string[] = [];
   let rest = folder.replace(/\s+/g, " ").trim();
 
@@ -76,6 +79,12 @@ function* walk(dir: string): Generator<string> {
   for (const e of entries) if (e.isDirectory()) yield* walk(path.join(dir, e.name));
 }
 
+type Override = { cover?: number; label?: string; sold?: boolean; landedAt?: string };
+const OVERRIDES = path.resolve(__dirname, "../data/overrides.json");
+const overrides: Record<string, Override> = fs.existsSync(OVERRIDES)
+  ? JSON.parse(fs.readFileSync(OVERRIDES, "utf8"))
+  : {};
+
 async function main() {
   fs.rmSync(OUT_IMG, { recursive: true, force: true });
   fs.mkdirSync(OUT_IMG, { recursive: true });
@@ -95,15 +104,17 @@ async function main() {
       const folder = path.basename(listingPath);
       // KIA listings were filed under the Toyota folder by mistake
       const brand = /^kia\b/i.test(folder) || path.basename(path.dirname(listingPath)) === "KIA" ? "Kia" : folderBrand;
-      const parsed = parseName(folder, brand);
+      const parsed = parseName(folder);
       parsed.name = parsed.name.replace(/^kia/i, "Kia").replace(/^Kia Morning - Picanto/, "Kia Picanto (Morning)");
       if (!parsed.name.toLowerCase().startsWith(brand.toLowerCase()) && !/^(i-robot)/i.test(parsed.name)) {
         parsed.name = `${brand} ${parsed.name}`;
       }
       if (/^i-robot/i.test(parsed.name)) parsed.name = "Honda I-Robot";
-      let slug = slugify(`${parsed.name} ${parsed.transmission ?? ""} ${parsed.priceMin ?? ""}`);
-      for (let i = 2; seen.has(slug); i++) slug = `${slugify(parsed.name)}-${i}`;
+      const base = slugify(`${parsed.name} ${parsed.transmission ?? ""} ${parsed.priceMin ?? ""} ${parsed.priceMax ?? ""}`);
+      let slug = base;
+      for (let i = 2; seen.has(slug); i++) slug = `${base}-${i}`;
       seen.add(slug);
+      const ov = overrides[slug] ?? {};
 
       const files = fs
         .readdirSync(listingPath)
@@ -137,8 +148,17 @@ async function main() {
         void meta;
       }
 
+      // overrides.cover = 1-based photo number to use as the cover; it is moved to the front
+      if (ov.cover && ov.cover > 1 && ov.cover <= images.length) {
+        const [c] = images.splice(ov.cover - 1, 1);
+        images.unshift(c);
+      }
+
       cars.push({
         slug,
+        label: ov.label ?? null,
+        sold: ov.sold ?? false,
+        landedAt: ov.landedAt ?? null,
         brand,
         name: parsed.name,
         transmission: parsed.transmission,

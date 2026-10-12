@@ -1,66 +1,77 @@
+import Image from "next/image";
 import { Catalog } from "@/components/Catalog";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { Hero } from "@/components/Hero";
+import { Journey } from "@/components/Journey";
+import { Marquee } from "@/components/Marquee";
+import { MeetAbdool } from "@/components/MeetAbdool";
 import { Reveal } from "@/components/Reveal";
-import { SITE_NAME, cars } from "@/lib/cars";
-
-const steps = [
-  ["Pick a car", "Browse real photos and honest price ranges."],
-  ["Chat Abdool", "One tap opens WhatsApp with the car already named."],
-  ["Inspect & ship", "Agree the details, then it's yours."],
-];
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import {
+  CREDIT_HREF,
+  CREDIT_NAME,
+  SITE_NAME,
+  TWITTER,
+  TWITTER_HANDLE,
+  brands,
+  cars,
+  cheapest,
+} from "@/lib/cars";
 
 export default function Home() {
   return (
     <main>
-      <header className="mx-auto max-w-6xl px-4 pb-10 pt-8 sm:px-6 sm:pt-12">
-        <nav className="flex items-center justify-between">
-          <span className="text-sm font-semibold tracking-tight">{SITE_NAME}</span>
-          <WhatsAppButton label="Chat" className="!px-4 !py-2" />
-        </nav>
+      <Hero count={cars.length} brands={brands.length} cheapest={cheapest} />
+      <Marquee cars={cars} />
 
-        <Reveal className="mt-16 max-w-3xl sm:mt-24">
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1 text-xs font-medium text-muted">
-            <span className="size-1.5 rounded-full bg-accent" /> Imported from the Netherlands
-          </p>
-          <h1 className="text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl">
-            Clean used cars.
-            <br />
-            <span className="text-muted">Straight from Europe.</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted">
-            {cars.length} cars ready now. See every photo, see the price, and talk directly to Abdool.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="#cars"
-              className="inline-flex items-center rounded-full bg-foreground px-6 py-3.5 text-sm font-semibold text-background transition hover:scale-[1.03] active:scale-95"
-            >
-              Browse cars
-            </a>
-            <WhatsAppButton />
-          </div>
-        </Reveal>
-      </header>
-
+      <div className="h-12" />
       <Catalog cars={cars} />
 
-      <section className="border-t border-line bg-card">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-16 sm:grid-cols-3 sm:px-6">
-          {steps.map(([t, d], i) => (
-            <Reveal key={t} delay={i * 0.08}>
-              <p className="text-sm font-semibold text-accent">0{i + 1}</p>
-              <h3 className="mt-2 text-xl font-semibold">{t}</h3>
-              <p className="mt-1 text-muted">{d}</p>
-            </Reveal>
-          ))}
-        </div>
-        <div className="mx-auto max-w-6xl px-4 pb-16 text-center sm:px-6">
-          <p className="mb-4 text-muted">Can&apos;t see what you want? Tell Abdool.</p>
-          <WhatsAppButton />
+      <Journey />
+      <MeetAbdool />
+
+      <section className="relative overflow-hidden border-t border-line">
+        <div className="relative mx-auto max-w-6xl px-4 py-24 text-center sm:px-6">
+          <div className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-72 max-w-2xl rounded-full bg-accent/20 blur-[110px]" />
+          <Reveal className="relative">
+            <h2 className="font-display text-4xl font-extrabold tracking-tight sm:text-6xl">
+              Don&apos;t see your car?
+              <br />
+              <span className="text-accent">Tell Abdool.</span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-md text-muted">Send him what you want and your budget.</p>
+            <div className="mt-8">
+              <WhatsAppButton label="Message Abdool on WhatsApp" className="!px-8 !py-4 !text-base" />
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <footer className="px-4 py-8 text-center text-xs text-muted">© {new Date().getFullYear()} {SITE_NAME}</footer>
+      <footer className="border-t border-line px-4 py-8 text-sm text-muted">
+        <div className="mx-auto flex max-w-6xl flex-col gap-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <div className="flex flex-col gap-1">
+            <span>
+              © {new Date().getFullYear()} {SITE_NAME}
+            </span>
+            <a href={TWITTER} target="_blank" rel="noopener noreferrer" className="transition hover:text-accent">
+              {TWITTER_HANDLE} on X ↗
+            </a>
+          </div>
+          <a
+            href={CREDIT_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-3 self-start rounded-full border border-line py-1.5 pl-1.5 pr-4 transition hover:border-accent sm:self-auto"
+          >
+            <span className="grid size-9 place-items-center rounded-full bg-[#f4f1e8]">
+              <Image src="/baseline-logo.webp" alt="" width={20} height={24} className="h-6 w-auto" />
+            </span>
+            <span className="leading-tight">
+              <span className="block text-xs">Website by</span>
+              <span className="block font-medium text-foreground transition group-hover:text-accent">{CREDIT_NAME}</span>
+            </span>
+          </a>
+        </div>
+      </footer>
     </main>
   );
 }

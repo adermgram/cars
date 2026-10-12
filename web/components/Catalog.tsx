@@ -3,13 +3,14 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { Car, brands } from "@/lib/cars";
+import { BUDGET_MAX, BudgetFinder } from "./BudgetFinder";
 import { CarCard } from "./CarCard";
 
 function Chip({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
     <button
       onClick={onClick}
-      className={`relative shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition ${
+      className={`relative shrink-0 rounded-full border px-4 py-2.5 text-sm font-medium transition ${
         active ? "border-transparent" : "border-line text-muted hover:text-foreground"
       }`}
     >
@@ -28,15 +29,23 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
 export function Catalog({ cars }: { cars: Car[] }) {
   const [brand, setBrand] = useState<string>("All");
   const [trans, setTrans] = useState<string>("Any");
+  const [budget, setBudget] = useState<number>(BUDGET_MAX);
+
+  // cars whose starting price fits the budget (unpriced cars only appear when budget is "any")
+  const inBudget = useMemo(
+    () => cars.filter((c) => budget >= BUDGET_MAX || (c.priceMin != null && c.priceMin <= budget)),
+    [cars, budget],
+  );
 
   const shown = useMemo(
-    () => cars.filter((c) => (brand === "All" || c.brand === brand) && (trans === "Any" || c.transmission === trans)),
-    [cars, brand, trans],
+    () => inBudget.filter((c) => (brand === "All" || c.brand === brand) && (trans === "Any" || c.transmission === trans)),
+    [inBudget, brand, trans],
   );
 
   return (
-    <section id="cars" className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
-      <div className="sticky top-0 z-20 -mx-4 bg-background/85 px-4 py-4 backdrop-blur sm:-mx-6 sm:px-6">
+    <section id="cars" className="mx-auto max-w-6xl scroll-mt-4 px-4 pb-24 sm:px-6">
+      <BudgetFinder value={budget} onChange={setBudget} count={inBudget.length} total={cars.length} />
+      <div className="z-20 -mx-4 bg-background/85 px-4 py-4 backdrop-blur sm:sticky sm:top-0 sm:-mx-6 sm:px-6">
         <LayoutGroup id="brand">
           <div className="no-scrollbar flex gap-2 overflow-x-auto">
             {["All", ...brands].map((b) => (
@@ -58,7 +67,7 @@ export function Catalog({ cars }: { cars: Car[] }) {
         </LayoutGroup>
       </div>
 
-      <motion.ul layout className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <motion.ul layout className="mt-4 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {shown.map((c, i) => (
             <CarCard key={c.slug} car={c} index={i} />
