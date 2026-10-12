@@ -20,7 +20,13 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   // set NEXT_PUBLIC_SITE_URL to the real domain so link previews resolve on WhatsApp/X
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  // (falls back to Vercel's production URL, then localhost for dev)
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+      (process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : "http://localhost:3000"),
+  ),
   title: "Abdool Moh Marketplace",
   description: "Quality used cars imported from the Netherlands. Browse, pick, and chat with Abdool on WhatsApp.",
 };
