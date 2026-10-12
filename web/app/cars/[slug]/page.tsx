@@ -24,7 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description: `${car.name}${car.transmission ? `, ${car.transmission}` : ""}. ${car.images.length} photos. Chat with Abdool on WhatsApp.`,
-    openGraph: { title, images: [car.images[0].src] },
+    // image comes from ./opengraph-image.tsx (branded PNG; WhatsApp skips WebP)
+    openGraph: { title },
   };
 }
 
