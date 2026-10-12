@@ -38,8 +38,7 @@ Parsing notes: the Kia folder was filed under `Toyota Yaris/` by mistake. The sc
 - Tested on a real phone (iPhone Safari, Android Chrome): OK.
 
 ## Not done yet / next steps (in order)
-1. Home page has no share image (only car pages do); consider an `app/opengraph-image.tsx`.
-3. **Pitch kit:** 20-second vertical phone screen recording (budget slider, Journey, a share poster) and the DM to Abdool. Ask him for: a higher-resolution photo, his story in 3 lines, 1 or 2 real numbers (cars delivered, years). Offer: setup fee plus monthly hosting/updates; propose a domain like abdoolmoh.com.
+1. **Pitch kit:** 20-second vertical phone screen recording (budget slider, Journey, a share poster) and the DM to Abdool. Ask him for: a higher-resolution photo, his story in 3 lines, 1 or 2 real numbers (cars delivered, years). Offer: setup fee plus monthly hosting/updates; propose a domain like abdoolmoh.com.
 4. **WhatsApp click counting** (Vercel Analytics custom event in `WhatsAppButton`) so we can show him real lead numbers. Not built.
 5. "Just landed" strip and SOLD stamps: the components exist (`SoldStamp`), no car is marked sold yet (do not invent sales).
 6. Optional later: Paystack deposit, admin panel, € price toggle.
@@ -52,4 +51,6 @@ Parsing notes: the Kia folder was filed under `Toyota Yaris/` by mistake. The sc
 ## Gotchas
 - This was developed on Windows. Writing long multi-line heredocs in Git Bash can fail; prefer writing files directly.
 - `next start` on Windows can leave an old server holding port 3100 after a rebuild; kill it before restarting or you will see a stale, unstyled site.
+- Link previews (`app/opengraph-image.tsx`, `app/cars/[slug]/opengraph-image.tsx`) are converted to JPEG via `asJpeg` in `lib/og.tsx`: PNGs were 1-2 MB and WhatsApp drops big previews. Satori ignores `inset`; use top/left/width/height.
+- Plain `chrome --headless --window-size=390` lays out at ~500px min width and crops. For phone screenshots use puppeteer-core with `setViewport({ width: 390, isMobile: true })` (install it in a scratch folder, not in `web/`).
 - Headless-browser screenshots stall Framer Motion animations if you use a virtual-time budget; wait in real time instead.
