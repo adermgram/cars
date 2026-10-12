@@ -32,9 +32,13 @@ Parsing notes: the Kia folder was filed under `Toyota Yaris/` by mistake. The sc
 - **Share engine:** `app/cars/[slug]/opengraph-image.tsx` (link preview) and `app/cars/[slug]/poster/route.tsx` (1080x1350 download), both via `lib/og.tsx` (Satori: flexbox only, ₦ needs the Inter fallback font, already handled).
 - **Mobile:** verified at 390px and 360px; 2-column card grid on phones; no horizontal overflow. Most visitors arrive from Twitter on a phone, so **always re-check phone width after UI changes**.
 
+## Deployment (done)
+- Live at **https://abdoolmoh.baselinesystemsafrica.com** (Vercel project `web`, Root Directory `web`). Every push to `main` on GitHub (`adermgram/cars`) redeploys automatically; don't deploy with the CLI from `web/`.
+- DNS: CNAME `abdoolmoh` at Hostinger (domain registrar) → Vercel. `NEXT_PUBLIC_SITE_URL` is set for production. If a dedicated domain (e.g. abdoolmoh.com) is bought later, update that env var and redeploy.
+- Tested on a real phone (iPhone Safari, Android Chrome): OK.
+
 ## Not done yet / next steps (in order)
-1. **Commit, deploy to Vercel** on a private link (root directory `web`). Set `NEXT_PUBLIC_SITE_URL` to the deployed URL, otherwise link previews point at localhost (`app/layout.tsx` `metadataBase`).
-2. **Test on a real phone** (iPhone Safari and Android Chrome): gallery swipe, budget slider, Journey scroll, bottom WhatsApp bar.
+1. Home page has no share image (only car pages do); consider an `app/opengraph-image.tsx`.
 3. **Pitch kit:** 20-second vertical phone screen recording (budget slider, Journey, a share poster) and the DM to Abdool. Ask him for: a higher-resolution photo, his story in 3 lines, 1 or 2 real numbers (cars delivered, years). Offer: setup fee plus monthly hosting/updates; propose a domain like abdoolmoh.com.
 4. **WhatsApp click counting** (Vercel Analytics custom event in `WhatsAppButton`) so we can show him real lead numbers. Not built.
 5. "Just landed" strip and SOLD stamps: the components exist (`SoldStamp`), no car is marked sold yet (do not invent sales).
